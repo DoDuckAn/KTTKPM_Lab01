@@ -22,3 +22,14 @@ services:
     container_name: consumer
     depends_on:
       - rabbitmq
+
+  auth:
+    build: ./JWT
+    container_name: JWT
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}

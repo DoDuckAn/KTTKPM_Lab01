@@ -6,6 +6,7 @@ app.use(express.json());
 
 const RABBITMQ_URL = "amqp://user:password@rabbitmq:5672";
 const LOG_QUEUE = "log_queue";
+const ERROR_LOG_QUEUE="error_log_queue";
 
 let channel;
 async function connectRabbitMQ(p) {
@@ -13,7 +14,11 @@ async function connectRabbitMQ(p) {
         try {
             const conn=await amqp.connect(RABBITMQ_URL);
             channel=await conn.createChannel();
-            await channel.assertQueue(LOG_QUEUE);
+            await channel.assertQueue(LOG_QUEUE,{
+                durable:true,
+                deadLetterExchange:"",
+                deadLetterRoutingKey:ERROR_LOG_QUEUE
+            });
             console.log("Producer connected to RabbitMQ");
             break;
         } catch{

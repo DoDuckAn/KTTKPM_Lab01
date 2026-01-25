@@ -10,10 +10,10 @@ Các service giao tiếp qua network Docker
 +----------+        +------------+        +-----------+
                          Queue
 
-curl -X POST http://localhost:3000/send \
+curl -X POST http://localhost:3000/record \
   -H "Content-Type: application/json" \
-  -d '{"message":"Order #1000 send"}'
+  -d '{"message":"Open door"}'
 
-curl -X POST http://localhost:3000/send \
+curl -X POST http://localhost:3000/record \
 -H "Content-Type: application/json" \
--d '{"orderId":"Order #1000 send", "message":"Test"}'
+-d '{"deviceID":"ESP01","message":"Open door"}'
